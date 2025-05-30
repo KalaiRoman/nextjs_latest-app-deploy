@@ -1,9 +1,6 @@
 [build]
-  command = "npm run build && next build"
+  command = "npm run build"
   publish = ".next"
 
-[functions]
-  directory = "kalai-app/netlify/functions"
-
 [dev]
-  framework = "next"
+  command = "npm run dev"
