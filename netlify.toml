@@ -1,6 +1,13 @@
 [build]
   command = "npm run build"
-  publish = ".next"
+  publish = ".next/server/pages"  # For SSR/SSG
+  # OR for static exports:
+  # publish = "out"  # If using 'next export'
 
-[dev]
-  command = "npm run dev"
+[build.environment]
+  NODE_VERSION = "18"  # Or your preferred Node version (16, 18, 20)
+
+[[redirects]]
+  from = "/*"
+  to = "/index.html"
+  status = 200
