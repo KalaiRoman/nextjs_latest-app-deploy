@@ -1,13 +1,31 @@
 [build]
   command = "npm run build"
   publish = ".next/server/pages"  # For SSR/SSG
-  # OR for static exports:
-  # publish = "out"  # If using 'next export'
+  # publish = "out"  # Uncomment if using 'next export'
+  functions = ".next/serverless"  # For API routes (if using serverless)
 
 [build.environment]
-  NODE_VERSION = "18"  # Or your preferred Node version (16, 18, 20)
+  NODE_VERSION = "20"  # Recommended Node LTS version
+  NPM_VERSION = "10"   # Matching npm version
+  NEXT_PUBLIC_ANALYTICS_ID = "production"  # Example env variable
 
+# Required for proper Next.js routing
 [[redirects]]
   from = "/*"
   to = "/index.html"
   status = 200
+
+# For handling Next.js internal routes
+[[headers]]
+  for = "/*"
+  [headers.values]
+    X-Frame-Options = "DENY"
+    X-Content-Type-Options = "nosniff"
+    Referrer-Policy = "strict-origin-when-cross-origin"
+
+# Cache optimization (optional but recommended)
+[context.production.environment]
+  NEXT_TELEMETRY_DISABLED = "1"
+
+[[plugins]]
+  package = "@netlify/plugin-nextjs@4.0.0"  # Official Next.js plugin
